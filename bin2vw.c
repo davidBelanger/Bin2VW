@@ -42,7 +42,6 @@ int main(int argc, char **argv)
     }
     printf("\n");
     counter++;
-    printf("%d\n",counter);
   }
   if(!feof(feature_file)){
     printf("ERROR: the number of labels and features read differed\n");
