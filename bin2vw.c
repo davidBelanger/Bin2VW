@@ -1,4 +1,4 @@
-
+//Copyright David Belanger, 2014
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -15,7 +15,6 @@ int main(int argc, char **argv)
   char feature_file_name[max_string_length];
   strcpy(label_file_name, argv[1]);
   strcpy(feature_file_name, argv[2]);
-  //printf("labels = %s, features = %s\n",label_file_name,feature_file_name);
   int feature_dim = atoi(argv[3]);
   
   FILE* label_file = fopen(label_file_name, "rb");
@@ -36,9 +35,8 @@ int main(int argc, char **argv)
   int counter = 0;
   while(!feof(label_file)){
     fread(&current_label,sizeof(float),1,label_file);
-    //    fscanf(label_file,"%f",&current_label);
     fread(current_feats,sizeof(float),feature_dim,feature_file);
-    printf("%f |",current_label);
+    printf("%f | ",current_label);
     for(i = 0; i < feature_dim; i++){
       printf("%d:%f ",i+1,current_feats[i]);
     }
