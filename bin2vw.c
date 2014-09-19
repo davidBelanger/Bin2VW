@@ -7,7 +7,7 @@ const int max_string_length = 300;
 int main(int argc, char **argv)
 {
   if (argc < 4) {
-    printf("Usage: ./bin2vw <label file> <feature file> <feature dim>\n");
+    printf("Usage: ./bin2vw <label file> <feature file> <feature dim> <1: convert labels to ints (for multiclass classification), 0: leave labels as floats (default = 1)>\n");
     return 0;
   }
   
@@ -16,7 +16,10 @@ int main(int argc, char **argv)
   strcpy(label_file_name, argv[1]);
   strcpy(feature_file_name, argv[2]);
   int feature_dim = atoi(argv[3]);
-  
+  int convert_labels = 1;
+  if(argc == 5)
+    convert_labels = convert_labels && atoi(argv[4]);
+
   FILE* label_file = fopen(label_file_name, "rb");
   if (label_file == NULL) {
     printf("Input label file not found\n");
@@ -36,7 +39,11 @@ int main(int argc, char **argv)
   while(!feof(label_file)){
     fread(&current_label,sizeof(float),1,label_file);
     fread(current_feats,sizeof(float),feature_dim,feature_file);
-    printf("%d | ",(int) current_label);
+    if(convert_labels)
+      printf("%d | ",(int) current_label);
+    else
+      printf("%f | ",current_label);
+      
     for(i = 0; i < feature_dim; i++){
       printf("%d:%f ",i+1,current_feats[i]);
     }
