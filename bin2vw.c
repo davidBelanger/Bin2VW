@@ -36,20 +36,25 @@ int main(int argc, char **argv)
   float * current_feats = (float *) malloc(feature_dim*sizeof(float));
   int i;
   int counter = 0;
-  while(!feof(label_file)){
+  while(1){
     fread(&current_label,sizeof(float),1,label_file);
     fread(current_feats,sizeof(float),feature_dim,feature_file);
-    if(convert_labels)
-      printf("%d | ",(int) current_label);
-    else
-      printf("%f | ",current_label);
+    if(!feof(label_file)){
+      if(convert_labels)
+	printf("%d | ",(int) current_label);
+      else
+	printf("%f | ",current_label);
       
-    for(i = 0; i < feature_dim; i++){
-      printf("%d:%f ",i+1,current_feats[i]);
+      for(i = 0; i < feature_dim; i++){
+	printf("%d:%f ",i+1,current_feats[i]);
+      }
+      printf("\n");
+    }else{
+      break;
     }
-    printf("\n");
     counter++;
   }
+
   if(!feof(feature_file)){
     printf("ERROR: the number of labels and features read differed\n");
     exit(1);
