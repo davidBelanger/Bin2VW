@@ -36,7 +36,7 @@ int main(int argc, char **argv)
   while(!feof(label_file)){
     fread(&current_label,sizeof(float),1,label_file);
     fread(current_feats,sizeof(float),feature_dim,feature_file);
-    printf("%f | ",current_label);
+    printf("%d | ",(int) current_label);
     for(i = 0; i < feature_dim; i++){
       printf("%d:%f ",i+1,current_feats[i]);
     }
